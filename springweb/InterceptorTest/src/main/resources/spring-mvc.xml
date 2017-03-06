@@ -27,12 +27,6 @@
     <mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
     <mvc:resources location="/images/" mapping="/images/**"></mvc:resources>
     
-    <!-- 为视图模型添加前缀后缀 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/pages/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
 
     <!-- aspectJ代理 -->
     <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator">

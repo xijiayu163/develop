@@ -21,13 +21,11 @@
     http://www.springframework.org/schema/cache/spring-cache-3.2.xsd"
     default-lazy-init="false">
 
-    <!-- 配置自定扫描的包 -->
-    <context:component-scan base-package="com.atguigu.springmvc"></context:component-scan>
-
-    <!-- 配置视图解析器: 如何把 handler 方法返回值解析为实际的物理视图 -->
+    <!-- 为视图模型添加前缀后缀 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"></property>
-        <property name="suffix" value=".jsp"></property>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/pages/" />
+        <property name="suffix" value=".jsp" />
     </bean>
 
     <!-- 配置视图  BeanNameViewResolver 解析器: 使用视图的名字来解析视图 -->
@@ -36,10 +34,5 @@
         <property name="order" value="100"></property>
     </bean>
 
-    <!-- 配置国际化资源文件 -->
-    <bean id="messageSource"
-        class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="i18n"></property>    
-    </bean>
 
 </beans>
