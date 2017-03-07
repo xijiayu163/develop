@@ -15,7 +15,7 @@
  * 
  */
  
-package com.yu.quartz;
+package org.quartz.examples.example1;
 
 import static org.quartz.DateBuilder.evenMinuteDate;
 import static org.quartz.JobBuilder.newJob;

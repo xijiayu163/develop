@@ -15,37 +15,33 @@
  * 
  */
  
-package com.yu.quartz;
+package org.quartz.examples.example10;
 
 import java.util.Date;
+import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * This is just a simple job that says "Hello" to the world.
+ * This is just a simple job that gets fired off many times by example 1
  * </p>
  * 
  * @author Bill Kratzer
  */
-public class HelloJob implements Job {
+public class SimpleJob implements Job {
 
-    private static Logger _log = LoggerFactory.getLogger(HelloJob.class);
+    private static Logger _log = LoggerFactory.getLogger(SimpleJob.class);
 
     /**
-     * <p>
      * Empty constructor for job initilization
-     * </p>
-     * <p>
-     * Quartz requires a public empty constructor so that the
-     * scheduler can instantiate the class whenever it needs.
-     * </p>
      */
-    public HelloJob() {
+    public SimpleJob() {
     }
 
     /**
@@ -58,11 +54,24 @@ public class HelloJob implements Job {
      * @throws JobExecutionException
      *             if there is an exception while executing the job.
      */
+    @SuppressWarnings("unchecked")
     public void execute(JobExecutionContext context)
         throws JobExecutionException {
 
-        // Say Hello to the World and display the date/time
-        _log.info("Hello World! - " + new Date());
+        // This job simply prints out its job name and the
+        // date and time that it is running
+        JobKey jobKey = context.getJobDetail().getKey();
+        _log.info("Executing job: " + jobKey + " executing at " + new Date() + ", fired by: " + context.getTrigger().getKey());
+        
+        if(context.getMergedJobDataMap().size() > 0) {
+            Set<String> keys = context.getMergedJobDataMap().keySet();
+            for(String key: keys) {
+                String val = context.getMergedJobDataMap().getString(key);
+                _log.info(" - jobDataMap entry: " + key + " = " + val);
+            }
+        }
+        
+        context.setResult("hello");
     }
 
 }
