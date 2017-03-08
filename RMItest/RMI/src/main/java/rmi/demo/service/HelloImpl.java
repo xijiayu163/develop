@@ -25,8 +25,8 @@ public class HelloImpl extends UnicastRemoteObject implements IHello {
         try {
             IHello hello = new HelloImpl();
             //加上此程序，就可以不要在控制台上开启RMI的注册程序，1099是RMI服务监视的默认端口
-            //LocateRegistry.createRegistry(1101); 
-            java.rmi.Naming.rebind("rmi://localhost:1101/hello", hello);
+            LocateRegistry.createRegistry(1101); 
+            java.rmi.Naming.rebind("rmi://127.0.0.1:1101/hello", hello);
             System.out.print("Ready");
         } catch (Exception e) {
             e.printStackTrace();
