@@ -41,7 +41,7 @@ public class ConsumerSessionAwareMessageListener implements SessionAwareMessageL
 			final String ms = msg.getText();
 			
 			User user = JSONObject.parseObject(ms, User.class);// 转换成相应的对象
-			Thread.sleep(1000);
+			//Thread.sleep(1000);
 			if (user == null) {
 				return;
 			}

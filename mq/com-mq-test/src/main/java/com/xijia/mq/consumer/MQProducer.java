@@ -3,6 +3,7 @@ package com.xijia.mq.consumer;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -26,10 +27,11 @@ public class MQProducer {
 	public void sendMessage(final User user) {
 		activeMqJmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
-				return session.createTextMessage(JSONObject.toJSONString(user));
+				TextMessage createTextMessage = session.createTextMessage(JSONObject.toJSONString(user));
+				createTextMessage.setStringProperty("JMSXGroupID", "IBM_NASDAQ_20/4/05");
+				return createTextMessage;
 			}
 		});
-		
 	}
 
 }

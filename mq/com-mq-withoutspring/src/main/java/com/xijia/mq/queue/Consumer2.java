@@ -14,8 +14,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
-public class Consumer {
+public class Consumer2 {
 	private static String userName = "xijia";
 	private static String password = "xijia";
 	private static String brokerURL = "tcp://192.168.8.88:61616";
@@ -24,9 +23,9 @@ public class Consumer {
 	private Connection connection;
 	private ConnectionFactory factory;
 	
-	private static final Log log = LogFactory.getLog(Consumer.class);
-
-	public Consumer() throws JMSException {
+	private static final Log log = LogFactory.getLog(Consumer2.class);
+	
+	public Consumer2() throws JMSException {
 		factory = new ActiveMQConnectionFactory(userName, password, brokerURL);
 		connection = factory.createConnection();
 		connection.start();
@@ -56,9 +55,9 @@ public class Consumer {
 	}
 
 	public static void main(String[] args) throws JMSException {
-		Consumer consumer = new Consumer();
+		Consumer2 consumer = new Consumer2();
 		Queue createQueue = consumer.getSession().createQueue("JOBS");
-		MessageConsumer messageConsumer = consumer.getSession().createConsumer(createQueue, "JMSXGroupID='A'");
+		MessageConsumer messageConsumer = consumer.getSession().createConsumer(createQueue, "JMSXGroupID='B'");
 		messageConsumer.setMessageListener(consumer.new Listener(Integer.toString(1)));
 	}
 }
