@@ -56,7 +56,7 @@
 	<!--这个是sessionAwareQueue目的地 -->
 	<bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
-			<value>${receivequeueName}</value>
+			<value>${sendqueueName}</value>
 		</constructor-arg>
 	</bean>
 

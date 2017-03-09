@@ -28,17 +28,24 @@ public class ConsumerSessionAwareMessageListener implements SessionAwareMessageL
 	private JmsTemplate activeMqJmsTemplate;
 	@Autowired
 	private Destination sessionAwareQueue;
+	
+	private int identity=-1;
+
+	public void setIndenty(int indenty) {
+		this.identity = indenty;
+	}
 
 	public synchronized void onMessage(Message message, Session session) {
 		try {
 			ActiveMQTextMessage msg = (ActiveMQTextMessage) message;
 			final String ms = msg.getText();
-			log.info("==>receive message:" + ms);
+			
 			User user = JSONObject.parseObject(ms, User.class);// 转换成相应的对象
+			Thread.sleep(1000);
 			if (user == null) {
 				return;
 			}
-
+			log.error("listen:"+identity+"==>receive message:" + user.getUserId());
 			try {
 			} catch (Exception e) {
 				// 发送异常，重新放回队列
@@ -53,4 +60,7 @@ public class ConsumerSessionAwareMessageListener implements SessionAwareMessageL
 			log.error("==>", e);
 		}
 	}
+
+
+
 }
