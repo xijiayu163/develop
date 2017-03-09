@@ -57,7 +57,7 @@ public class Consumer2 {
 	public static void main(String[] args) throws JMSException {
 		Consumer2 consumer = new Consumer2();
 		Queue createQueue = consumer.getSession().createQueue("JOBS");
-		MessageConsumer messageConsumer = consumer.getSession().createConsumer(createQueue, "JMSXGroupID='B'");
+		MessageConsumer messageConsumer = consumer.getSession().createConsumer(createQueue);
 		messageConsumer.setMessageListener(consumer.new Listener(Integer.toString(1)));
 	}
 }
