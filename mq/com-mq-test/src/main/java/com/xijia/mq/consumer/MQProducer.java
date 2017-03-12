@@ -14,6 +14,11 @@ import com.alibaba.fastjson.JSONObject;
 
 
 
+/**
+ * 参考资料http://docs.spring.io/spring/docs/3.0.6.RELEASE/spring-framework-reference/html/jms.html
+ * @author xijia
+ *
+ */
 @Service("mqProducer")
 public class MQProducer {
 	
