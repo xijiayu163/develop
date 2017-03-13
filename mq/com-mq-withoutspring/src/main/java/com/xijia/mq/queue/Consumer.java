@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 public class Consumer {
 	private static String userName = "xijia";
 	private static String password = "xijia";
-	private static String brokerURL = "tcp://192.168.8.88:61616";
+	private static String brokerURL = "tcp://192.168.8.100:61616?jms.prefetchPolicy.all=1000";
 
 	private Session session;
 	private Connection connection;
@@ -48,7 +48,8 @@ public class Consumer {
 		public void onMessage(Message message) {
 			try {
 				// do something here
-				log.error(job + " id:" + ((ObjectMessage) message).getObject());
+				Thread.sleep(1000);
+				log.error(job + " id:" + ((ObjectMessage) message).getObject()+"priority:"+ message.getJMSPriority());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -58,7 +59,7 @@ public class Consumer {
 	public static void main(String[] args) throws JMSException {
 		Consumer consumer = new Consumer();
 		Queue createQueue = consumer.getSession().createQueue("JOBS");
-		MessageConsumer messageConsumer = consumer.getSession().createConsumer(createQueue, "JMSXGroupID='A'");
+		MessageConsumer messageConsumer = consumer.getSession().createConsumer(createQueue);
 		messageConsumer.setMessageListener(consumer.new Listener(Integer.toString(1)));
 	}
 }

@@ -14,7 +14,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 public class Publisher {
 	private static String userName = "xijia";
 	private static String password = "xijia";
-	private static String brokerURL = "tcp://192.168.8.88:61616";
+	private static String brokerURL = "tcp://192.168.8.100:61616";
 
 	private Session session;
 	private MessageProducer producer;
@@ -30,7 +30,7 @@ public class Publisher {
 	}
 
 	public void sendMessage() throws JMSException {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 30; i++) {
 			Destination destination = session.createQueue("JOBS");
 			Message message = session.createObjectMessage(i);
 			if(i%2==0){
@@ -38,7 +38,9 @@ public class Publisher {
 			}else{
 				message.setStringProperty("JMSXGroupID", "B");
 			}
-
+			//设置优先级
+			//在服务器增加配置:<policyEntry queue=">" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" />
+			producer.setPriority(i%10);
 			producer.send(destination, message);
 		}
 	}
