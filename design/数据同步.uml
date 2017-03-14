@@ -1736,21 +1736,21 @@ Connect Timeout=60;
 <XPD:ATTR name="Name" type="string">CommonQuery</XPD:ATTR>
 <XPD:REF name="Owner">RfktSPQew0m8k6WyeMhJ0AAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">4</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="WsONiPRhPEuLt8b/rXKMsAAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="NAtLWXZurUqSpqt7XdolhQAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Object</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">UY2lhTqwu0OfJC+dTOXsYAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="ZjHq3f4uCECXTz9xZCoXbwAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="d/SoNzh7wEidpM9e3afa1QAA">
 <XPD:ATTR name="Name" type="string">String bizName</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">UY2lhTqwu0OfJC+dTOXsYAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="LavPUXDbvUq2c2xFNeAGNAAA">
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="kSv16wDMf0qs2asF/GU7zQAA">
 <XPD:ATTR name="Name" type="string">Map&lt;String</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">UY2lhTqwu0OfJC+dTOXsYAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[3]" type="UMLParameter" guid="zlaUchjkLUu02FnMRL7Z5QAA">
-<XPD:ATTR name="Name" type="string">?&gt; Condition</XPD:ATTR>
+<XPD:OBJ name="Parameters[3]" type="UMLParameter" guid="cseVdxSBh0S5RU6wDNBhBgAA">
+<XPD:ATTR name="Name" type="string">?&gt; params</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">UY2lhTqwu0OfJC+dTOXsYAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -1758,19 +1758,19 @@ Connect Timeout=60;
 <XPD:ATTR name="Name" type="string">CommonAsyncQuery</XPD:ATTR>
 <XPD:REF name="Owner">RfktSPQew0m8k6WyeMhJ0AAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">4</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="aCIVp3ODB0msiimL2A9+vwAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="Vfm1goO0tkeEQOzPd66MFAAA">
 <XPD:ATTR name="Name" type="string">String bizName</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">VzFfIiTHZ02ofXnHXU3KuAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="eTejPFLP5U6qMPAbD0T1cwAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="kN+3V6C+6UmAtkBY2QXFJQAA">
 <XPD:ATTR name="Name" type="string">Map&lt;String</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">VzFfIiTHZ02ofXnHXU3KuAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="jZoYniskpUWCqf82NIlFnQAA">
-<XPD:ATTR name="Name" type="string">?&gt; condition</XPD:ATTR>
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="DIa02qGU/U2T4tVEfvzU1wAA">
+<XPD:ATTR name="Name" type="string">?&gt; params</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">VzFfIiTHZ02ofXnHXU3KuAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[3]" type="UMLParameter" guid="QWK757QWhEC50z4x154OmAAA">
+<XPD:OBJ name="Parameters[3]" type="UMLParameter" guid="tS9/tMjy6UaBb2RBZw9JAgAA">
 <XPD:ATTR name="Name" type="string">String recallAddr</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">VzFfIiTHZ02ofXnHXU3KuAAA</XPD:REF>
 </XPD:OBJ>

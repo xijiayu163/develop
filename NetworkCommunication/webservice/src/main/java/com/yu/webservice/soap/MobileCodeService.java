@@ -18,6 +18,12 @@ import org.apache.commons.httpclient.methods.PostMethod;
  */
 public class MobileCodeService {
     //1. http-get方式访问webservice
+	/**
+	 * WSDL http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?WSDL
+	 * @param mobileCode
+	 * @param userID
+	 * @throws Exception
+	 */
     public void get(String mobileCode ,String userID ) throws Exception{
         URL url=new URL("http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx/getMobileCodeInfo?mobileCode="+mobileCode+
                 "&userID="+userID);
@@ -64,11 +70,11 @@ public class MobileCodeService {
         HttpClient client=new HttpClient();
         PostMethod postMethod=new PostMethod("http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx/getMobileCodeInfo");
         //3.设置请求参数
-        NameValuePair[] data = { new NameValuePair("mobileCode", "15626217879"),new NameValuePair("userID", "") };
-        postMethod.setRequestBody(data);  
-        //postMethod.setRequestBody(new FileInputStream("c:/soap.xml")); 
+        //NameValuePair[] data = { new NameValuePair("mobileCode", "15626217879"),new NameValuePair("userID", "") };
+        //postMethod.setRequestBody(data);  
+        postMethod.setRequestBody(new FileInputStream("c:/soap.xml")); 
           //修改请求的头部
-          //postMethod.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
+        postMethod.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
         //4.执行请求 ,结果码
         int code=client.executeMethod(postMethod);
         System.out.println("结果码:"+code);
@@ -85,7 +91,7 @@ public class MobileCodeService {
          //postMethod.setRequestBody(data);  
          //postMethod.setRequestBody(new FileInputStream("c:/soap.xml")); 
            //修改请求的头部
-           postMethod.setRequestHeader("Content-Type", "text/xml; charset=UTF-8");
+         postMethod.setRequestHeader("Content-Type", "text/xml; charset=UTF-8");
          //4.执行请求 ,结果码
          int code=client.executeMethod(postMethod);
          System.out.println("结果码:"+code);
@@ -102,10 +108,10 @@ public class MobileCodeService {
 
     public static void main(String[] args) throws Exception{
         MobileCodeService ws=new MobileCodeService();
-//        ws.get("15626217879", "");
-//        ws.post("15626217879", "");
-//        ws.soap();
-        ws.GetResonseBodyHtml();
+        //ws.get("15626217879", "");
+        //ws.post("15626217879", "");
+        ws.soap();
+        //ws.GetResonseBodyHtml();
     }
 
 }

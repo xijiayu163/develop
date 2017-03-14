@@ -47,6 +47,7 @@ public class PhoneService {
          System.out.println("ÔÙ¼û£¡"+city);
      }
 
+    
     public static void main(String[] args) {
         String address1="http://127.0.0.1:8888/ws/phoneService";
 //        String address2="http://127.0.0.1:8888/ws/phoneManager";
