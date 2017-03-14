@@ -88,8 +88,8 @@ public class FailoverTest extends TestSuite {
 	@Test
 	public void TestLoadBalance() throws JMSException, InterruptedException {
 		// 消息接收者
-		//brokerURL = "failover:(tcp://192.168.8.88:61619,tcp://192.168.8.88:61617)?randomize=false&jms.prefetchPolicy.all=1";
-		brokerURL = "tcp://192.168.8.88:61619?jms.prefetchPolicy.all=1";
+		brokerURL = "failover:(tcp://192.168.8.88:61619,tcp://192.168.8.88:61617)?randomize=true&jms.prefetchPolicy.all=1";
+		//brokerURL = "tcp://192.168.8.88:61619?jms.prefetchPolicy.all=1";
 		factory = new ActiveMQConnectionFactory(userName, password, brokerURL);
 		connection = factory.createConnection();
 		connection.start();
@@ -115,8 +115,8 @@ public class FailoverTest extends TestSuite {
 		
 
 		// 消息接收者2
-		//brokerURL = "failover:(tcp://192.168.8.88:61619,tcp://192.168.8.88:61617)?randomize=false&jms.prefetchPolicy.all=1";
-		brokerURL = "tcp://192.168.8.88:61617?jms.prefetchPolicy.all=1";
+		brokerURL = "failover:(tcp://192.168.8.88:61619,tcp://192.168.8.88:61617)?randomize=true&jms.prefetchPolicy.all=1";
+		//brokerURL = "tcp://192.168.8.88:61617?jms.prefetchPolicy.all=1";
 		factory = new ActiveMQConnectionFactory(userName, password, brokerURL);
 		connection = factory.createConnection();
 		connection.start();
@@ -128,7 +128,7 @@ public class FailoverTest extends TestSuite {
 			comsumer2.setMessageListener(new MessageListener() {
 				public void onMessage(Message m) {
 					try {
-						Thread.sleep(1);
+						Thread.sleep(1000);
 						String text = ((TextMessage) m).getText();
 						System.out.println("消费者2:"+text);
 					} catch (JMSException e1) {
@@ -150,7 +150,7 @@ public class FailoverTest extends TestSuite {
 //		queue = new ActiveMQQueue("testQueue");
 //		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 //		MessageProducer producer = session.createProducer(queue);
-//		for (int i = 0; i < 30; i++) {
+//		for (int i = 0; i < 10000; i++) {
 //			TextMessage message = session.createTextMessage(String.valueOf(i));
 //			producer.send(message);
 //		}
