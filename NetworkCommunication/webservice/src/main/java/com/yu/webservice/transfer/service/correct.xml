@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:q0="http://service.transfer.webservice.yu.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<q0:getDoctor1>
+			<q0:arg0>1</q0:arg0>
+		</q0:getDoctor1>
+	</soapenv:Body>
+</soapenv:Envelope>
