@@ -15,8 +15,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
+//import org.apache.xml.serialize.OutputFormat;
+//import org.apache.xml.serialize.XMLSerializer;
 import org.junit.Test;
 import org.omg.CORBA.Environment;
 import org.w3c.dom.Document;
@@ -46,42 +46,42 @@ public class Client extends TestCase {
 		String result = postMethod.getResponseBodyAsString();
 		System.out.println("Post请求的结果：" + result);
 		
-		String formatXML = formatXML(result);
-		System.out.println("formatXml:"+formatXML);
+		//String formatXML = formatXML(result);
+//		System.out.println("formatXml:"+formatXML);
 		
 		
 		
 	}
 
-	public String formatXML(String unformattedXml) {
-		try {
-			Document document = parseXmlFile(unformattedXml);
-			OutputFormat format = new OutputFormat(document);
-			format.setIndenting(true);
-			format.setIndent(3);
-			format.setOmitXMLDeclaration(true);
-			Writer out = new StringWriter();
-			XMLSerializer serializer = new XMLSerializer(out, format);
-			serializer.serialize(document);
-			return out.toString();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private Document parseXmlFile(String in) {
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			InputSource is = new InputSource(new StringReader(in));
-			return db.parse(is);
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		} catch (SAXException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+//	public String formatXML(String unformattedXml) {
+//		try {
+//			Document document = parseXmlFile(unformattedXml);
+//			OutputFormat format = new OutputFormat(document);
+//			format.setIndenting(true);
+//			format.setIndent(3);
+//			format.setOmitXMLDeclaration(true);
+//			Writer out = new StringWriter();
+//			XMLSerializer serializer = new XMLSerializer(out, format);
+//			serializer.serialize(document);
+//			return out.toString();
+//		} catch (IOException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
+//
+//	private Document parseXmlFile(String in) {
+//		try {
+//			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder db = dbf.newDocumentBuilder();
+//			InputSource is = new InputSource(new StringReader(in));
+//			return db.parse(is);
+//		} catch (ParserConfigurationException e) {
+//			throw new RuntimeException(e);
+//		} catch (SAXException e) {
+//			throw new RuntimeException(e);
+//		} catch (IOException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 	    
 }

@@ -39,7 +39,7 @@ public class WSWorker
     public static void main(String [] args) throws SOAPException{
     	Map<String,Object> map = new HashMap<String, Object>();
     	map.put("arg0", "1");
-    	JSONArray jsonArray = performRequest("q0","getDoctor1","http://service.transfer.webservice.yu.com/",map,"http://127.0.0.1:8888/ws/cxf/DoctorService1?WSDL");
+    	JSONArray jsonArray = performRequest("q1111","getDoctor1","http://service.transfer.webservice.yu.com/",map,"http://127.0.0.1:8888/ws/cxf/DoctorService1?WSDL");
     	String jsonString = jsonArray.toJSONString();
     	System.out.println(jsonString);
     }
