@@ -1,10 +1,11 @@
 .settings/
-.classpath
 target/
 .idea/
-.project
 .svn/
 logs/
 .mymetadata
 .externalToolBuilders/
 WebContent/
+output/
+.classpath
+.project

@@ -1,0 +1,9 @@
+.settings/
+target/
+.idea/
+.svn/
+logs/
+.mymetadata
+.externalToolBuilders/
+WebContent/
+output/
