@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web>
+	<root name="root_name1">
+		<bar id="0" title="The Zero Child" />
+		<bar id="123" title="The First Child" />
+		<bar id="456" title="The Second Child" />
+	</root>
+	<root name="root_name2">
+		<bar id="789" title="Another Child" />
+	</root>
+</web>
