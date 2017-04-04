@@ -965,12 +965,18 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
     @Override
     public SocketState process(SocketWrapper<S> socketWrapper)
         throws IOException {
+    	getLog().info("开始处理socketWrapper");
+    	getLog().info("RequestInfo rp = request.getRequestProcessor(); request内部的reqProcessorMX为私有并默认初始化了");
         RequestInfo rp = request.getRequestProcessor();
+        getLog().info("rp.setStage(org.apache.coyote.Constants.STAGE_PARSE);");
         rp.setStage(org.apache.coyote.Constants.STAGE_PARSE);
 
         // Setting up the I/O
+        getLog().info("setSocketWrapper(socketWrapper);");
         setSocketWrapper(socketWrapper);
+        getLog().info("getInputBuffer().init(socketWrapper, endpoint); 调用InternalInputBuffer的init方法,获取socket的inputStream并设置到其inputStream属性,inputBuffer在构造函数中已经初始化");
         getInputBuffer().init(socketWrapper, endpoint);
+        getLog().info("getOutputBuffer().init(socketWrapper, endpoint); outputBuffer在构造函数中已经初始化");
         getOutputBuffer().init(socketWrapper, endpoint);
 
         // Flags
@@ -997,6 +1003,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
             try {
                 setRequestLineReadTimeout();
 
+                getLog().info("getInputBuffer().parseRequestLine(false)");
                 if (!getInputBuffer().parseRequestLine(keptAlive)) {
                     if (handleIncompleteRequestLineRead()) {
                         break;

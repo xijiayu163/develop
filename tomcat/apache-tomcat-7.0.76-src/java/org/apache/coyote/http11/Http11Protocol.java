@@ -59,8 +59,12 @@ public class Http11Protocol extends AbstractHttp11JsseProtocol<Socket> {
 
 
     public Http11Protocol() {
+    	getLog().info("Http11Protocol 构造函数");
+    	getLog().info("endpoint = new JIoEndpoint()");
         endpoint = new JIoEndpoint();
+        getLog().info("cHandler = new Http11ConnectionHandler(this);");
         cHandler = new Http11ConnectionHandler(this);
+        getLog().info("((JIoEndpoint) endpoint).setHandler(cHandler);");
         ((JIoEndpoint) endpoint).setHandler(cHandler);
         setSoLinger(Constants.DEFAULT_CONNECTION_LINGER);
         setSoTimeout(Constants.DEFAULT_CONNECTION_TIMEOUT);
@@ -106,6 +110,7 @@ public class Http11Protocol extends AbstractHttp11JsseProtocol<Socket> {
         protected Http11Protocol proto;
             
         Http11ConnectionHandler(Http11Protocol proto) {
+        	log.info("Http11ConnectionHandler 构造函数,设置proto 为Http11Protocol对象");
             this.proto = proto;
         }
 
@@ -162,10 +167,12 @@ public class Http11Protocol extends AbstractHttp11JsseProtocol<Socket> {
 
         @Override
         protected Http11Processor createProcessor() {
+        	log.info("Http11Processor processor = new Http11Processor(...)");
             Http11Processor processor = new Http11Processor(
                     proto.getMaxHttpHeaderSize(), (JIoEndpoint)proto.endpoint,
                     proto.getMaxTrailerSize(), proto.getAllowedTrailerHeadersAsSet(),
                     proto.getMaxExtensionSize(), proto.getMaxSwallowSize());
+            log.info("processor.setAdapter(proto.adapter);");
             processor.setAdapter(proto.adapter);
             processor.setMaxKeepAliveRequests(proto.getMaxKeepAliveRequests());
             processor.setKeepAliveTimeout(proto.getKeepAliveTimeout());
@@ -183,6 +190,7 @@ public class Http11Protocol extends AbstractHttp11JsseProtocol<Socket> {
             processor.setDisableKeepAlivePercentage(
                     proto.getDisableKeepAlivePercentage());
             processor.setMaxCookieCount(proto.getMaxCookieCount());
+            log.info("register(processor); 注册processor");
             register(processor);
             return processor;
         }

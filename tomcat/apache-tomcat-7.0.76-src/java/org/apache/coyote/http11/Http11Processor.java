@@ -54,11 +54,16 @@ public class Http11Processor extends AbstractHttp11Processor<Socket> {
             Set<String> allowedTrailerHeaders, int maxExtensionSize, int maxSwallowSize) {
 
         super(endpoint);
-        
+        log.info("super(endpoint); Http11Processor 父类构造函数,设置endpoint");
+  
+        log.info("inputBuffer = new InternalInputBuffer(request, headerBufferSize);");
         inputBuffer = new InternalInputBuffer(request, headerBufferSize);
+        log.info("request.setInputBuffer(inputBuffer);");
         request.setInputBuffer(inputBuffer);
 
+        log.info("outputBuffer = new InternalOutputBuffer(response, headerBufferSize);");
         outputBuffer = new InternalOutputBuffer(response, headerBufferSize);
+        log.info("response.setOutputBuffer(outputBuffer);");
         response.setOutputBuffer(outputBuffer);
 
         initializeFilters(maxTrailerSize, allowedTrailerHeaders, maxExtensionSize, maxSwallowSize);

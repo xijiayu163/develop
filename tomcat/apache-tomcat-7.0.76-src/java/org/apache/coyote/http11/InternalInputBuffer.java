@@ -84,7 +84,8 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
     public boolean parseRequestLine(boolean useAvailableDataOnly)
 
         throws IOException {
-
+    	
+    	log.info("解析http第一行数据,形如 GET / HTTP/1.1");
         int start = 0;
 
         //
@@ -102,6 +103,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             // Set the start time once we start reading data (even if it is
             // just skipping blank lines)
             if (request.getStartTime() < 0) {
+            	log.info("request.setStartTime(System.currentTimeMillis());");
                 request.setStartTime(System.currentTimeMillis());
             }
             chr = buf[pos++];
@@ -131,6 +133,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             // also be tolerant of multiple SP and/or HT.
             if (buf[pos] == Constants.SP || buf[pos] == Constants.HT) {
                 space = true;
+                log.info("request.method().setBytes(buf, start, pos - start); 设置方法字节");
                 request.method().setBytes(buf, start, pos - start);
             } else if (!HttpParser.isToken(buf[pos])) {
                 throw new IllegalArgumentException(sm.getString("iib.invalidmethod"));
@@ -195,10 +198,13 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         request.unparsedURI().setBytes(buf, start, end - start);
         if (questionPos >= 0) {
+        	log.info("request.queryString().setBytes 设置查询字节");
             request.queryString().setBytes(buf, questionPos + 1,
                                            end - questionPos - 1);
+            log.info("request.requestURI().setBytes 设置请求URI字节");
             request.requestURI().setBytes(buf, start, questionPos - start);
         } else {
+        	log.info("request.requestURI().setBytes 设置请求URI字节");
             request.requestURI().setBytes(buf, start, end - start);
         }
 
@@ -247,6 +253,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         }
 
         if ((end - start) > 0) {
+        	log.info("设置协议字节");
             request.protocol().setBytes(buf, start, end - start);
         } else {
             request.protocol().setString("");
@@ -459,6 +466,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
     @Override
     protected void init(SocketWrapper<Socket> socketWrapper,
             AbstractEndpoint<Socket> endpoint) throws IOException {
+    	log.info("inputStream = socketWrapper.getSocket().getInputStream();");
         inputStream = socketWrapper.getSocket().getInputStream();
     }
 

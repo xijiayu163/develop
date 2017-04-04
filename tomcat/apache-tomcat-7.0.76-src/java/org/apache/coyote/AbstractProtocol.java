@@ -30,9 +30,11 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
+import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.upgrade.servlet31.HttpUpgradeHandler;
 import org.apache.coyote.http11.upgrade.servlet31.WebConnection;
 import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.modeler.Registry;
 import org.apache.tomcat.util.net.AbstractEndpoint;
@@ -449,6 +451,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
         endpoint.setName(endpointName.substring(1, endpointName.length()-1));
 
         try {
+        	getLog().info("endpoint.init 初始化endpoint");
             endpoint.init();
         } catch (Exception ex) {
             getLog().error(sm.getString("abstractProtocolHandler.initError",
@@ -579,12 +582,13 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                 return SocketState.CLOSED;
             }
 
+            getLog().info("S socket = wrapper.getSocket();");
             S socket = wrapper.getSocket();
             if (socket == null) {
                 // Nothing to do. Socket has been closed.
                 return SocketState.CLOSED;
             }
-
+            
             Processor<S> processor = connections.get(socket);
             if (status == SocketStatus.DISCONNECT && processor == null) {
                 // Nothing to do. Endpoint requested a close and there is no
@@ -600,6 +604,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                     processor = recycledProcessors.poll();
                 }
                 if (processor == null) {
+                	getLog().info("processor = createProcessor(); processor为http11Processor类型");
                     processor = createProcessor();
                 }
 
@@ -634,6 +639,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                     } else if (processor.isUpgrade()) {
                         state = processor.upgradeDispatch(status);
                     } else {
+                    	getLog().info("state = processor.process(wrapper); 委托给processor处理,processor为Http11Processor类型");
                         state = processor.process(wrapper);
                     }
 

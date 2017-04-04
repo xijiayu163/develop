@@ -63,6 +63,7 @@ public class Connector extends LifecycleMBeanBase  {
     }
 
     public Connector(String protocol) {
+    	log.info("调用Connector构造函数,创建Http11Protocol对象，并赋值给protocolHandler属性");
         setProtocol(protocol);
         // Instantiate protocol handler
         try {
@@ -959,7 +960,10 @@ public class Connector extends LifecycleMBeanBase  {
         super.initInternal();
 
         // Initialize adapter
+        log.info("Connector 初始化开始");
+        log.info("adapter = new CoyoteAdapter(this)");
         adapter = new CoyoteAdapter(this);
+        log.info("protocolHandler.setAdapter(adapter)");
         protocolHandler.setAdapter(adapter);
 
         // Make sure parseBodyMethodsSet has a default
@@ -975,6 +979,7 @@ public class Connector extends LifecycleMBeanBase  {
         }
 
         try {
+        	log.info("protocolHandler.init() 初始化protocolHandler");
             protocolHandler.init();
         } catch (Exception e) {
             throw new LifecycleException

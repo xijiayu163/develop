@@ -231,9 +231,11 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
                     errorDelay = 0;
 
                     // Configure the socket
+                    log.info("收到请求,设置新建立的socket属性，该socket与请求数据关联");
                     if (running && !paused && setSocketOptions(socket)) {
                         // Hand this socket off to an appropriate processor
-                        if (!processSocket(socket)) {
+                    	log.info("调用processSocket(socket)处理请求，内部开新的线程");
+                    	if (!processSocket(socket)) {
                             countDownConnection();
                             // Close socket right away
                             closeSocket(socket);
@@ -283,6 +285,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
         protected SocketStatus status = null;
 
         public SocketProcessor(SocketWrapper<Socket> socket) {
+        	log.info("构建SocketProcessor,设置SocketProcessor的socket属性为传入的SocketWrapper");
             if (socket==null) throw new NullPointerException();
             this.socket = socket;
         }
@@ -297,6 +300,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
             boolean launch = false;
             synchronized (socket) {
                 try {
+                	log.info("后台线程开始对请求进行处理");
                     SocketState state = SocketState.OPEN;
 
                     try {
@@ -313,6 +317,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
 
                     if ((state != SocketState.CLOSED)) {
                         if (status == null) {
+                        	log.info("委托给AbstractProtocol.AbstractConnectionHandler处理，调用其process");
                             state = handler.process(socket, SocketStatus.OPEN_READ);
                         } else {
                             state = handler.process(socket,status);
@@ -390,6 +395,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
                 serverSocketFactory =
                     handler.getSslImplementation().getServerSocketFactory(this);
             } else {
+            	log.info("serverSocketFactory = new DefaultServerSocketFactory(this);创建serverSocketFactory");
                 serverSocketFactory = new DefaultServerSocketFactory(this);
             }
         }
@@ -397,6 +403,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
         if (serverSocket == null) {
             try {
                 if (getAddress() == null) {
+                	log.info("serverSocket = serverSocketFactory.createSocket(getPort(),getBacklog());");
                     serverSocket = serverSocketFactory.createSocket(getPort(),
                             getBacklog());
                 } else {
@@ -523,6 +530,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
     protected boolean processSocket(Socket socket) {
         // Process the request from this socket
         try {
+        	log.info("根据socket构建SocketWrapper,构建过程主要是增加对socket读写锁");
             SocketWrapper<Socket> wrapper = new SocketWrapper<Socket>(socket);
             wrapper.setKeepAliveLeft(getMaxKeepAliveRequests());
             wrapper.setSecure(isSSLEnabled());
@@ -530,6 +538,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
             if (!running) {
                 return false;
             }
+            log.info("executor开新的线程执行对SocketWrapper的处理");
             getExecutor().execute(new SocketProcessor(wrapper));
         } catch (RejectedExecutionException x) {
             log.warn("Socket processing request was rejected for:"+socket,x);

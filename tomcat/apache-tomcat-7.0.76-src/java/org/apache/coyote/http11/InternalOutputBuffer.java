@@ -24,6 +24,8 @@ import java.net.Socket;
 import org.apache.coyote.ActionCode;
 import org.apache.coyote.OutputBuffer;
 import org.apache.coyote.Response;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.apache.tomcat.util.net.SocketWrapper;
@@ -35,6 +37,8 @@ import org.apache.tomcat.util.net.SocketWrapper;
  */
 public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
     implements ByteChunk.ByteOutputChannel {
+	
+	private static final Log log = LogFactory.getLog(InternalOutputBuffer.class);
 
     // ----------------------------------------------------------- Constructors
 
@@ -100,6 +104,7 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
     public void init(SocketWrapper<Socket> socketWrapper,
             AbstractEndpoint<Socket> endpoint) throws IOException {
 
+    	log.info("outputStream = socketWrapper.getSocket().getOutputStream();");
         outputStream = socketWrapper.getSocket().getOutputStream();
     }
 
