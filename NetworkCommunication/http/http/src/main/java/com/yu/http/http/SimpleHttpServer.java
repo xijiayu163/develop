@@ -56,6 +56,7 @@ import java.util.StringTokenizer;
  * 
  * </pre>
  * 
+ * 参考链接:http://blog.csdn.net/kfanning/article/details/6062118/
  * @author 刘长炯
  * @version 1.0 2007-07-24 Sunday
  */
