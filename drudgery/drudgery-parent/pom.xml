@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.yino</groupId>
+		<artifactId>yino-parent</artifactId>
+		<version>2.11.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>drudgery-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>drudgery-parent</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<activemq.version>5.11.1</activemq.version>
+		<fastjson.version>1.1.41</fastjson.version>
+	</properties>
+
+	<modules>
+		<module>../drudgery-config</module>
+		<module>../drudgery-facade</module>
+		<module>../drudgery-mq</module>
+		<module>../drudgery-web</module>
+		<module>../drudgery-worker</module>
+		<module>../drudgery-service</module>
+		<module>../drudgery-plugin</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-all</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-pool</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

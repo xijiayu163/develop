@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link type="text/css" href="jquery-ui-1.9.1/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="jquery-ui-1.9.1/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.core.js"></script>
+ <script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.widget.js"></script>
+ <script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.mouse.js"></script>
+ <script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.button.js"></script>
+ <script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.draggable.js"></script>
+ <script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.position.js"></script>
+ <script type="text/javascript" src="jquery-ui-1.9.1/ui/jquery.ui.dialog.js"></script>
+ <script type="text/javascript">
+ $(function() {
+     // ???
+     $("#btn").click(function() {
+         //alert("btn ????!");
+		 $("#dialog-confirm").dialog("open");
+     });
+
+     // ??????
+     $("#dialog-confirm").dialog(
+		 {
+			 modal: true,             // ???????
+			 autoOpen: false,
+			 buttons: {
+				 "Ok": function() {
+					  $(this).dialog('close');
+				 },
+				 "Cancel": function() {
+					 $(this).dialog('close');
+				 }
+			 }
+		 }
+	 );
+ });
+ </script>
+</head>
+<body>
+	<div id="dialog-confirm" title="Empty the recycle bin?" style="display: none">
+         <p>
+             <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+             These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+	</div>
+	jquery download link :http://jqueryui.com/download/all/ <br />
+	cankao link:http://www.jb51.net/article/44609.htm <br />
+	<input type="button" value="delete" id="btn" />
+</body>
+</html>
