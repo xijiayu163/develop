@@ -9,3 +9,4 @@ WebContent/
 output/
 .classpath
 .project
+kettle/etl/update_insert_Trans.ktr
