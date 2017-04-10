@@ -21,12 +21,14 @@
 
 	<modules>
 		<module>../drudgery-config</module>
-		<module>../drudgery-facade</module>
-		<module>../drudgery-mq</module>
-		<module>../drudgery-web</module>
-		<module>../drudgery-worker</module>
+		<module>../drudgery-base</module>
 		<module>../drudgery-service</module>
+		<module>../drudgery-service-impl</module>
 		<module>../drudgery-plugin</module>
+		<module>../drudgery-mq</module>
+		<module>../drudgery-manage-web</module>
+		<module>../drudgery-worker</module>
+		<module>../drudgery-service-platform</module>
 	</modules>
 
 	<dependencyManagement>

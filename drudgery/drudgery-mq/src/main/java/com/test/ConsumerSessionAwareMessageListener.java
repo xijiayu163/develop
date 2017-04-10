@@ -47,6 +47,9 @@ public class ConsumerSessionAwareMessageListener implements SessionAwareMessageL
 			log.error("listen:"+identity+"==>receive message:" + user.getUserId());
 			try {
 			} catch (Exception e) {
+				
+				
+				
 				// 发送异常，重新放回队列
 				activeMqJmsTemplate.send(sessionAwareQueue, new MessageCreator() {
 					public Message createMessage(Session session) throws JMSException {

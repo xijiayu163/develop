@@ -2,7 +2,7 @@ package com.yino.drudgery.rw;
 
 import java.util.List;
 
-import com.yino.drudgery.entity.JobResult;
+import com.yino.drudgery.entity.JobData;
 
 public class DbWriter implements IWrite{
 
@@ -10,7 +10,7 @@ public class DbWriter implements IWrite{
 	private String tableName;
 	private List<String> primaryKeyFields;
 	
-	public JobResult writeData() {
+	public JobData writeData(JobData jobData) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,7 +1,7 @@
 package com.yino.drudgery.rw;
 
-import com.yino.drudgery.entity.JobResult;
+import com.yino.drudgery.entity.JobData;
 
 public interface IRead {
-	JobResult getData();
+	JobData getData();
 }

@@ -1,6 +1,6 @@
 package com.yino.drudgery.rw;
 
-import com.yino.drudgery.entity.JobResult;
+import com.yino.drudgery.entity.JobData;
 
 public abstract class WebServiceReader implements IRead{
 
@@ -10,6 +10,6 @@ public abstract class WebServiceReader implements IRead{
 	protected HttpRequestEnum requestEnum;
 	
 	
-	public abstract JobResult getData();
+	public abstract JobData getData();
 	
 }

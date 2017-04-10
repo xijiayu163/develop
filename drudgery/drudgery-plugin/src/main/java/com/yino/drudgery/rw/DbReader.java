@@ -1,6 +1,6 @@
 package com.yino.drudgery.rw;
 
-import com.yino.drudgery.entity.JobResult;
+import com.yino.drudgery.entity.JobData;
 
 public class DbReader implements IRead{
 	private String DataSource;
@@ -31,10 +31,8 @@ public class DbReader implements IRead{
 		this.commandType = commandType;
 	}
 	
-	/**
-	 * 做默认的查询
-	 */
-	public JobResult getData(){
+	public JobData getData(){
+		
 		return null;
 	}
 }

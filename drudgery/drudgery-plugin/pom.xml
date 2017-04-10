@@ -10,10 +10,103 @@
 	</parent>
   
   <dependencies>
+  		<!-- 日志相关jar包 -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+		</dependency>
+  
 		<dependency>
 			<groupId>com.yino</groupId>
 			<artifactId>drudgery-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+			<!-- 数据库相关jar�???? -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-dbcp2</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			
+			<!-- spring相关jar�???? -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.yino</groupId>
+				<artifactId>drudgery-base</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
 	</dependencies>
 </project>

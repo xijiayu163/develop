@@ -1,12 +1,12 @@
 package com.yino.drudgery.rw;
 
-import com.yino.drudgery.entity.JobResult;
+import com.yino.drudgery.entity.JobData;
 
 public class SoapWebServiceReader extends WebServiceReader{
 	private String namespace;
 
 	@Override
-	public JobResult getData() {
+	public JobData getData() {
 		// TODO Auto-generated method stub
 		return null;
 	}

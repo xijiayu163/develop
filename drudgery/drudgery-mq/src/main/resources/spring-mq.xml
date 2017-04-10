@@ -59,6 +59,13 @@
 			<value>${receivequeueName}</value>
 		</constructor-arg>
 	</bean>
+	
+		<!--这个是sessionAwareQueue目的地 -->
+	<bean id="sessionAwareQueue1" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>${sendqueueName}</value>
+		</constructor-arg>
+	</bean>
 
 	<!-- 可以获取session的MessageListener -->
 	<bean id="consumerSessionAwareMessageListener" class="com.test.ConsumerSessionAwareMessageListener"></bean>
@@ -67,6 +74,20 @@
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="sessionAwareQueue" />
 		<property name="messageListener" ref="consumerSessionAwareMessageListener" />
+		<property name="messageSelector" value="group=mine" />
+		
 	</bean>
+	
+	
+<!-- 	<bean id="mqMessageConsumer" class="com.yino.drudgery.mq.service.impl.MqMessageConsumer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="sessionAwareQueue1" />
+		<property name="selector" value="${receiveselector}" />
+	</bean>
+	
+	<bean id="mqMessageProducer" class="com.yino.drudgery.mq.service.impl.MqMessageProducer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="sessionAwareQueue" />
+	</bean> -->
 
 </beans>

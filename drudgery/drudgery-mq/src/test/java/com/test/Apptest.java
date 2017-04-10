@@ -8,6 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.test.ConsumerSessionAwareMessageListener;
 import com.test.MQProducer;
 import com.test.User;
+import com.yino.drudgery.mq.service.impl.MqMessageConsumer;
+import com.yino.drudgery.mq.service.impl.MqMessageProducer;
 
 
 
@@ -33,6 +35,13 @@ public class Apptest {
 		try {
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-context.xml");
 			context.start();
+//			log.error("==>MQ context start error:context");
+//			MqMessageConsumer consumer = (MqMessageConsumer)context.getBean("mqMessageConsumer");
+//			consumer.start();
+//			log.error("==>MQ context start error:consumer"+consumer.getSelector());
+//			MqMessageProducer producer = (MqMessageProducer)context.getBean("mqMessageProducer");
+//			producer.start();
+//			log.error("==>MQ context start error:producer");
 			
 			ConsumerSessionAwareMessageListener bean = (ConsumerSessionAwareMessageListener)context.getBean("consumerSessionAwareMessageListener");
 			bean.setIndenty(1);

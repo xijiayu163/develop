@@ -27,10 +27,9 @@ public class MQProducer {
 		activeMqJmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
 				TextMessage createTextMessage = session.createTextMessage(JSONObject.toJSONString(user));
-				createTextMessage.setStringProperty("JMSXGroupID", "IBM_NASDAQ_20/4/05");
+				createTextMessage.setStringProperty("group", "mine");
 				return createTextMessage;
 			}
 		});
 	}
-
 }
