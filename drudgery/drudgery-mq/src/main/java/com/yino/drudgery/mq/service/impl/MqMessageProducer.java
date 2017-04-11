@@ -7,57 +7,36 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.test.User;
 import com.yino.drudgery.entity.Job;
 
-@Service("mqMessageProducer")
+@Service
 public class MqMessageProducer {
-
-	private ConnectionFactory connectionFactory;
-	private Destination destination;
-	private Session session;
-	private MessageProducer producer;
 	
-	public MqMessageProducer(){}
+	@Autowired
+	private JmsTemplate activeMqJmsTemplate;
 
-	public void start() throws JMSException
-	{
-		Connection connection = connectionFactory.createConnection();
-		connection.start();
-		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		producer = session.createProducer(destination);
-		
-	}
-	
-	
-	public void sendMessage(Job job)
-	{
-		/*
-		Message message = session.createObjectMessage(job);
-		if(job.getJobcfg().getJobGroupName()=null && !groupName.isEmpty())
-		message.setStringProperty("JMSXGroupID", groupName);
-		producer.send(message, priority, 0, 0);
-		*/
+	/**
+	 * 发送消息.
+	 * @param user 
+	 */
+	public void sendMessage(final Job job) {
+		activeMqJmsTemplate.send(new MessageCreator() {
+			public Message createMessage(Session session) throws JMSException {
+				TextMessage createTextMessage = session.createTextMessage(JSONObject.toJSONString(job));
+				createTextMessage.setStringProperty("groupName", job.getJobcfg().getJobGroupName());
+				return createTextMessage;
+			}
+		});
 	}
 
-	public ConnectionFactory getConnectionFactory() {
-		return connectionFactory;
-	}
-
-	public void setConnectionFactory(ConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
-	}
-
-	public Destination getDestination() {
-		return destination;
-	}
-
-	public void setDestination(Destination destination) {
-		this.destination = destination;
-	}
-	
 
 }

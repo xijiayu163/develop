@@ -18,17 +18,8 @@ public class MqMessageService extends AbstractMsgService{
 	@Autowired
 	private MqMessageProducer producer;
 	
-	public MqMessageService() throws JMSException
+	public MqMessageService()
 	{
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-context.xml");
-		context.start();
-
-		consumer = (MqMessageConsumer)context.getBean("mqMessageConsumer");
-		consumer.setService(this);
-		consumer.start();
-		
-		producer = (MqMessageProducer)context.getBean("mqMessageProducer");
-		producer.start();
 	}
 	
 	@Override

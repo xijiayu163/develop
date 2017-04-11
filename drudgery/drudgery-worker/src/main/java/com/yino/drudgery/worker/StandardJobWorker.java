@@ -17,7 +17,7 @@ public class StandardJobWorker extends JobReceiveListener{
 	
 	public StandardJobWorker()
 	{
-		//TODO: 获取发送消息实例
+		//TODO: 通过spring配置获取service实例
 		service = null;
 		service.addListener(this);
 	}

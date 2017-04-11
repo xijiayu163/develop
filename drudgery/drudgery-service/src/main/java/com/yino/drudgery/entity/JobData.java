@@ -1,7 +1,5 @@
 package com.yino.drudgery.entity;
 
-import java.util.Date;
-
 import com.yino.drudgery.enums.ResultEnum;
 
 public class JobData {

@@ -1,86 +1,62 @@
 package com.yino.drudgery.mq.service.impl;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
+import org.apache.activemq.command.ActiveMQTextMessage;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
+import org.springframework.jms.listener.SessionAwareMessageListener;
 import org.springframework.stereotype.Service;
 
-import com.yino.drudgery.entity.Job;
+import com.alibaba.fastjson.JSONObject;
+import com.test.ConsumerSessionAwareMessageListener;
+import com.test.User;
 
-@Service("mqMessageConsumer")
-public class MqMessageConsumer implements MessageListener{
+@Service
+public class MqMessageConsumer implements SessionAwareMessageListener<Message> {
 
-	private ConnectionFactory connectionFactory;
-	private Destination destination;
-	private String selector=null;
-	
+	private static final Log log = LogFactory.getLog(ConsumerSessionAwareMessageListener.class);
+
 	@Autowired
-	private MqMessageService service ;
+	private JmsTemplate activeMqJmsTemplate;
+	@Autowired
+	private Destination sessionAwareQueue;
 
-	
-	public MqMessageConsumer(){}
-	
-	public void start() throws JMSException
-	{
-		Connection connection = connectionFactory.createConnection();
-		connection.start();
-		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		MessageConsumer messageConsumer = session.createConsumer(destination, selector);
-		messageConsumer.setMessageListener(this);
-	}
-	
-	@Override
-	public void onMessage(Message message) {
-		if(message instanceof ObjectMessage)
-		{
-			Object o=null;
+	private MqMessageService service;
+
+	public synchronized void onMessage(Message message, Session session) {
+		try {
+			ActiveMQTextMessage msg = (ActiveMQTextMessage) message;
+			final String ms = msg.getText();
+			
+			User user = JSONObject.parseObject(ms, User.class);// 转换成相应的对象
+			//Thread.sleep(1000);
+			if (user == null) {
+				return;
+			}
+			log.error("listen:"+1+"==>receive message:" + user.getUserId());
 			try {
-				o = ((ObjectMessage)message).getObject();
-			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				
+				
+				
+				// 发送异常，重新放回队列
+				activeMqJmsTemplate.send(sessionAwareQueue, new MessageCreator() {
+					public Message createMessage(Session session) throws JMSException {
+						return session.createTextMessage(ms);
+					}
+				});
+				log.error("==>MailException:", e);
 			}
-			if(o!=null &&   o instanceof Job)
-			{
-				Job job = (Job)o;
-				if(service!=null)
-				{
-					service.receiveMsg(job);
-				}
-			}
+		} catch (Exception e) {
+			log.error("==>", e);
 		}
-	}
-
-	public ConnectionFactory getConnectionFactory() {
-		return connectionFactory;
-	}
-
-	public void setConnectionFactory(ConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
-	}
-
-	public Destination getDestination() {
-		return destination;
-	}
-
-	public void setDestination(Destination destination) {
-		this.destination = destination;
-	}
-
-	public String getSelector() {
-		return selector;
-	}
-
-	public void setSelector(String selector) {
-		this.selector = selector;
 	}
 
 	public MqMessageService getService() {

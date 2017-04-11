@@ -55,6 +55,12 @@
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>com.yino</groupId>
+				<artifactId>yino-util</artifactId>
+				<version>2.11.1-SNAPSHOT</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

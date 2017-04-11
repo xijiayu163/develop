@@ -4,16 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MultiDatasource {
-	@Autowired
+class MultiDatasource implements IMultiDataSource{
 	private JdbcTemplate jdbcTemplate;
+	private Map<String,DrudgeryDataSource> dataSources = new HashMap<>();
 	
-	private Map<String,DrudgeryDataSource> dataSources = new HashMap<>();;
+	public MultiDatasource(){
+		jdbcTemplate = new JdbcTemplate();
+	}
 	
 	public void addDataSource(String datasourceName,String driverClassName,String hostUrl,String userName,String password){
 		DrudgeryDataSource dataSource = new DrudgeryDataSource();
@@ -41,7 +42,20 @@ public class MultiDatasource {
 		if(dataSources.containsKey(datasourceName)){
 			DrudgeryDataSource drudgeryDataSource = dataSources.get(datasourceName);
 			jdbcTemplate.setDataSource(drudgeryDataSource.getBasicDataSource());
+		}else{
+			jdbcTemplate.setDataSource(null);
 		}
+	}
+
+	@Override
+	public JdbcTemplate getJdbcTemplate(String dataSourceName) {
+		switchDataSource(dataSourceName);
+		return jdbcTemplate;
+	}
+
+	@Override
+	public DrudgeryDataSource getDataSource(String dataSourceName) {
+		return dataSources.get(dataSourceName);
 	}
 	
 }
