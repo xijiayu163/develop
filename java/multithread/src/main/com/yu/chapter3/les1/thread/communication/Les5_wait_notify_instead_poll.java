@@ -1,4 +1,4 @@
-package com.yu.chapter3.thread.communication;
+package com.yu.chapter3.les1.thread.communication;
 
 import java.util.ArrayList;
 import java.util.List;

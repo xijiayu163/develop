@@ -1,4 +1,4 @@
-package com.yu.chapter3.thread.communication;
+package com.yu.chapter3.les1.thread.communication;
 
 public class Les2_wait_noobjectMonitor_exception {
 	
