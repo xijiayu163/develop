@@ -2,6 +2,10 @@ package com.yino.drudgery.worker;
 
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.yino.drudgery.Factory.JobRunnerFactory;
 import com.yino.drudgery.entity.Job;
 import com.yino.drudgery.enums.JobRunErrorEnum;
@@ -12,21 +16,20 @@ import com.yino.drudgery.mq.service.MessageService;
 
 public class StandardJobWorker extends JobReceiveListener{
 	
-	private MessageService service ;
+	private static final Log log = LogFactory.getLog(StandardJobWorker.class);
+	
+	private MessageService msgService ;
 	
 	
 	public StandardJobWorker()
 	{
-		//TODO: 通过spring配置获取service实例
-		service = null;
-		service.addListener(this);
 	}
 	
 	@Override
 	public void doInternal(Job job) {
 		JobRunner runner;
 		try {
-			runner = JobRunnerFactory.createJobRunner(job,service);
+			runner = JobRunnerFactory.createJobRunner(job,msgService);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,6 +39,7 @@ public class StandardJobWorker extends JobReceiveListener{
 			job.setJobRunError(JobRunErrorEnum.error);
 			job.setStartTime(new Date());
 			job.setEndTime(new Date());
+			msgService.sendMsg(job);
 			return ;
 		}
 		runner.run();
@@ -44,7 +48,30 @@ public class StandardJobWorker extends JobReceiveListener{
 	/**
 	 * @param service the service to set
 	 */
-	public void setService(MessageService service) {
-		this.service = service;
+	public void setMsgService(MessageService service) {
+		this.msgService = service;
+		service.addListener(this);
 	}
+
+	public MessageService getMsgService() {
+		return msgService;
+	}
+	
+	
+	public static void main(String[] args) {
+		try {
+			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-worker.xml");
+			context.start();
+			StandardJobWorker jobWorker = (StandardJobWorker)context.getBean("jobWorker");
+			log.error(jobWorker.getMsgService().toString());
+			
+			//System.exit(0);
+		}
+		catch(Exception e)
+		{
+			log.error("==>MQ context start error:", e);
+			System.exit(0);
+		}
+	}
+	
 }

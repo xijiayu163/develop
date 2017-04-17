@@ -1,6 +1,11 @@
 package com.yino.drudgery.enums;
 
 public enum JobRunErrorEnum {
-	none,
-	error
+	error,
+	getError,
+	setError,
+	convertError,
+	createReaderError,
+	createWriterError,
+	createConverterError
 }

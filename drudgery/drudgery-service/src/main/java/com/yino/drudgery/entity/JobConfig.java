@@ -15,7 +15,7 @@ public class JobConfig {
 	private String remark;
 	private TriggerTypeEnum triggerType;
 	private String className;
-	private List<String> jobConfigParams;
+	private List<JobConfigParam> jobConfigParams;
 	public String getJobConfigID() {
 		return jobConfigID;
 	}
@@ -70,10 +70,10 @@ public class JobConfig {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	public List<String> getJobConfigParams() {
+	public List<JobConfigParam> getJobConfigParams() {
 		return jobConfigParams;
 	}
-	public void setJobConfigParams(List<String> jobConfigParams) {
+	public void setJobConfigParams(List<JobConfigParam> jobConfigParams) {
 		this.jobConfigParams = jobConfigParams;
 	}
 	

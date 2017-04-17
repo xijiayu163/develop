@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.yino.drudgery.entity.Job;
+import com.yino.drudgery.entity.JobConfigParam;
 import com.yino.drudgery.entity.JobData;
+import com.yino.drudgery.enums.JobParamTypeEnum;
 import com.yino.drudgery.enums.JobRunErrorEnum;
 import com.yino.drudgery.enums.ResultEnum;
 import com.yino.drudgery.factory.ConverterFactory;
@@ -39,30 +41,59 @@ public class StandardJobRunner extends JobRunner {
 	 */
 	@Override
 	public void initParams() {
-		try {
-			readImpl = ReaderFactory.createInstance("jarFile", "className");
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
+		Job job = getJob();
 		try {
-			writeImpl = WriterFactory.createInstance("jarFile", "className");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		convertImpl = new ArrayList<IConvert>();
-		for (String s : getWriterClassPath()) {
-			IConvert c;
-			try {
-				c = ConverterFactory.createInstance("jarFile", "className");
-				convertImpl.add(c);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			List<String> list = getClassPath(JobParamTypeEnum.getClassPath.toString());
+			if (list.size() > 0) {
+				String[] ss = list.get(0).split(";");
+				if (ss.length >= 2) {
+					readImpl = ReaderFactory.createInstance(ss[0], ss[1]);
+				} else {
+					job.setJobRunError(JobRunErrorEnum.createReaderError);
+					job.setErrorMessage(String.format("创建Read接口错误,无法解析配置：{0}", list.get(0)));
+				}
 			}
 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			job.setJobRunError(JobRunErrorEnum.createReaderError);
+			job.setErrorMessage(e.getMessage());
+		}
+
+		try {
+			List<String> list = getClassPath(JobParamTypeEnum.setClassPath.toString());
+			if (list.size() > 0) {
+				String[] ss = list.get(0).split(";");
+				if (ss.length >= 2) {
+					writeImpl = WriterFactory.createInstance(ss[0], ss[1]);
+				} else {
+					job.setJobRunError(JobRunErrorEnum.createWriterError);
+					job.setErrorMessage(String.format("创建Write接口错误,无法解析配置：{0}", list.get(0)));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			job.setJobRunError(JobRunErrorEnum.createWriterError);
+			job.setErrorMessage(e.getMessage());
+		}
+
+		try {
+			List<String> list = getClassPath(JobParamTypeEnum.convertClassPath.toString());
+			for (String s : list) {
+				String[] ss = s.split(";");
+				if (ss.length >= 2) {
+					writeImpl = WriterFactory.createInstance(ss[0], ss[1]);
+				} else {
+					job.setJobRunError(JobRunErrorEnum.createConverterError);
+					job.setErrorMessage(String.format("创建Convert接口错误,无法解析配置：{0}", list.get(0)));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			job.setJobRunError(JobRunErrorEnum.createConverterError);
+			job.setErrorMessage(e.getMessage());
 		}
 	}
 
@@ -74,21 +105,25 @@ public class StandardJobRunner extends JobRunner {
 		Job job = getJob();
 		JobData value = null;
 
+		// 如果初始化已经出现错误，则不再继续执行
+		if (job.getJobRunError() != null) {
+			return;
+		}
+
 		// 从取数据接口提取数据
 		if (readImpl != null) {
 			value = readImpl.getData();
-			if (value.getStatus() == ResultEnum.failed) {
+			if (value.getStatus() == ResultEnum.failure) {
 				job.setErrorMessage(value.getErrorMessage());
-				job.setJobRunError(JobRunErrorEnum.error);
+				job.setJobRunError(JobRunErrorEnum.getError);
 				return;
 			}
 
 		} else {
 			value = job.getInputJobData();
-			if(value==null)
-			{
+			if (value == null) {
 				job.setErrorMessage("没有配置数据获取接口或提供输入数据！");
-				job.setJobRunError(JobRunErrorEnum.error);
+				job.setJobRunError(JobRunErrorEnum.getError);
 				return;
 			}
 		}
@@ -97,9 +132,9 @@ public class StandardJobRunner extends JobRunner {
 		if (convertImpl != null || !convertImpl.isEmpty()) {
 			for (IConvert converter : convertImpl) {
 				value = converter.convert(value);
-				if (value.getStatus() == ResultEnum.failed) {
+				if (value.getStatus() == ResultEnum.failure) {
 					job.setErrorMessage(value.getErrorMessage());
-					job.setJobRunError(JobRunErrorEnum.error);
+					job.setJobRunError(JobRunErrorEnum.convertError);
 					return;
 				}
 			}
@@ -108,9 +143,9 @@ public class StandardJobRunner extends JobRunner {
 		// 数据写入接口
 		if (writeImpl != null) {
 			value = writeImpl.writeData(value);
-			if (value.getStatus() == ResultEnum.failed) {
+			if (value.getStatus() == ResultEnum.failure) {
 				job.setErrorMessage(value.getErrorMessage());
-				job.setJobRunError(JobRunErrorEnum.error);
+				job.setJobRunError(JobRunErrorEnum.setError);
 				return;
 			}
 		}
@@ -123,19 +158,20 @@ public class StandardJobRunner extends JobRunner {
 
 	}
 
-
-	protected String getReaderClassPath() {
-
-		return "";
-	}
-
-	protected String getConverterClassPaths() {
-		return "";
-	}
-
-	protected List<String> getWriterClassPath() {
-		List<String> list = new ArrayList<String>();
-		return list;
+	/**
+	 * @Description 获取各类接口路径
+	 * @param jobParamType
+	 * @return
+	 */
+	protected List<String> getClassPath(String jobParamType) {
+		List<String> classList = new ArrayList<String>();
+		List<JobConfigParam> pList = getJob().getJobcfg().getJobConfigParams();
+		for (JobConfigParam p : pList) {
+			if (p.getParamType() == jobParamType) {
+				classList.add(p.getValue());
+			}
+		}
+		return classList;
 	}
 
 }

@@ -21,6 +21,8 @@ public class Job {
 	private JobData inputJobData;
 	private JobData outputJobData;
 	
+	
+	
 	public String getJobId() {
 		return jobId;
 	}

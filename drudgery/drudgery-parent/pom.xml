@@ -20,7 +20,7 @@
 	</properties>
 
 	<modules>
-		<module>../drudgery-config</module>
+				<module>../drudgery-config</module>
 		<module>../drudgery-base</module>
 		<module>../drudgery-service</module>
 		<module>../drudgery-service-impl</module>
@@ -29,6 +29,8 @@
 		<module>../drudgery-manage-web</module>
 		<module>../drudgery-worker</module>
 		<module>../drudgery-service-platform</module>
+		<module>../drudgery-dao</module>
+		<module>../drudgery-dao-impl</module>
 	</modules>
 
 	<dependencyManagement>

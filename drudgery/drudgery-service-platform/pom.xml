@@ -11,10 +11,40 @@
 	</parent>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-config</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.yino</groupId>
 			<artifactId>drudgery-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-mq</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-service-impl</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.activemq</groupId> -->
+		<!-- <artifactId>activemq-all</artifactId> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.activemq</groupId> -->
+		<!-- <artifactId>activemq-pool</artifactId> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
 		</dependency>
 
 		<dependency>
@@ -26,6 +56,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>yino-util</artifactId>
+			<version>2.11.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

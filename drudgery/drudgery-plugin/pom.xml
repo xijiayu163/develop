@@ -114,12 +114,16 @@
 			<artifactId>spring-test</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>yino-util</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.yino</groupId>
 			<artifactId>drudgery-base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 	</dependencies>
 </project>

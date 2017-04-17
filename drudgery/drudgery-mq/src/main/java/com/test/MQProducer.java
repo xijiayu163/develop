@@ -8,12 +8,12 @@ import javax.jms.TextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
 
-@Service("mqProducer")
+@Component("mqProducer")
 public class MQProducer {
 	
 	@Autowired
@@ -24,6 +24,7 @@ public class MQProducer {
 	 * @param user 
 	 */
 	public void sendMessage(final User user) {
+		
 		activeMqJmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
 				TextMessage createTextMessage = session.createTextMessage(JSONObject.toJSONString(user));

@@ -1,5 +1,9 @@
 package com.yino.drudgery.service.controller;
 
-public class DataQueryController {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+public class DataQueryController {
+	private final Log log = LogFactory.getLog(this.getClass());
+	
 }

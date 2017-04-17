@@ -15,5 +15,23 @@
 			<artifactId>drudgery-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-dao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-dao-impl</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 	</dependencies>
 </project>

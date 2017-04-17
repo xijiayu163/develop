@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.yino</groupId>
 		<artifactId>drudgery-parent</artifactId>
-		  <version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../drudgery-parent</relativePath>
 	</parent>
 
@@ -14,6 +14,12 @@
 		<dependency>
 			<groupId>com.yino</groupId>
 			<artifactId>drudgery-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-mq</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

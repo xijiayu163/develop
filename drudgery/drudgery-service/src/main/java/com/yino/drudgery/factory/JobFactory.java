@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import com.yino.drudgery.entity.Job;
 import com.yino.drudgery.entity.JobConfig;
+import com.yino.drudgery.entity.RequestData;
+import com.yino.drudgery.entity.RequestJob;
 import com.yino.drudgery.enums.JobRunErrorEnum;
 import com.yino.drudgery.enums.JobRunStatusEnum;
 
@@ -14,8 +16,20 @@ public class JobFactory {
 		job.setJobcfg(jobConfig);
 		job.setJobId(getUUID());
 		job.setCreateTime(new Date());
-		job.setJobRunError(JobRunErrorEnum.none);
+		job.setJobRunError(null);
 		job.setJobRunStatus(JobRunStatusEnum.create);
+		return job;
+	}
+	
+	
+	public static Job createJob(JobConfig jobConfig,RequestData requestData){
+		RequestJob job = new RequestJob();
+		job.setJobcfg(jobConfig);
+		job.setJobId(getUUID());
+		job.setCreateTime(new Date());
+		job.setJobRunError(null);
+		job.setJobRunStatus(JobRunStatusEnum.create);
+		job.setRequestData(requestData);
 		return job;
 	}
 	

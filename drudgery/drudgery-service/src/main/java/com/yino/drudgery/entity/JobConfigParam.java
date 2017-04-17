@@ -1,7 +1,6 @@
 package com.yino.drudgery.entity;
 
 public class JobConfigParam {
-
 	private String jobConfigId;
 	private String jobConfigParamId;
 	private String paramType;
