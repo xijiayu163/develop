@@ -1,0 +1,4 @@
+HttpServer1 未使用facade
+HttpServer2 使用facade,将实际的request,response隐藏不对客户端公开
+
+消息没有设置响应头，手动加上，固定死的，不支持解析超过固定大小的byte[]，改成默认4096以支持示例用的gif图片

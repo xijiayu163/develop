@@ -21,10 +21,8 @@ import com.yino.drudgery.entity.JobConfig;
 import com.yino.drudgery.listener.JobConfigListener;
 import com.yino.drudgery.service.impl.ServiceImpls;
 
-
 /**
- * @Description:监听作业配置变更，动态调整定时作业
- * 初始化时，启动所有定时作业
+ * @Description:监听作业配置变更，动态调整定时作业 初始化时，启动所有定时作业
  * 
  * 
  * @Title: QuartzJobConfigListener.java
@@ -34,34 +32,33 @@ import com.yino.drudgery.service.impl.ServiceImpls;
  * @date:2017/04/11
  * @version:V1.0
  */
-public class QuartzJobConfigListener implements JobConfigListener{
+public class QuartzJobConfigListener implements JobConfigListener {
 
-	private final Log log = LogFactory.getLog(this.getClass());	
+	private final Log log = LogFactory.getLog(this.getClass());
 	private SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
 
-	private ConcurrentHashMap<String,JobKey> map = new ConcurrentHashMap<String,JobKey>();
-	
+	private ConcurrentHashMap<String, JobKey> map = new ConcurrentHashMap<String, JobKey>();
+
 	private ServiceImpls serviceImpls;
-	
-	public QuartzJobConfigListener(ServiceImpls serviceImpls)
-	{
-		this.serviceImpls=serviceImpls;
+
+	public QuartzJobConfigListener(ServiceImpls serviceImpls) {
+		this.serviceImpls = serviceImpls;
 		serviceImpls.getJobConfigService().addJobConfigListener(this);
 		List<JobConfig> list = serviceImpls.getJobConfigService().getAllJobConfig();
 		addQuartzJobs(list);
+		startJobs();
 	}
+
 	/**
 	 * 
 	 * @param list
 	 */
-	public void addQuartzJobs(List<JobConfig> list)
-	{
-		for(JobConfig jobConfig:list)
-		{
+	public void addQuartzJobs(List<JobConfig> list) {
+		for (JobConfig jobConfig : list) {
 			addQuartzJob(jobConfig);
 		}
 	}
-	
+
 	/**
 	 * @Description: 添加一个定时任务
 	 * 
@@ -79,17 +76,16 @@ public class QuartzJobConfigListener implements JobConfigListener{
 	 */
 	public void addQuartzJob(JobConfig jobConfig) {
 		try {
-			
-			CronJobConfig cronJobConfig =null;
-			if(!(jobConfig instanceof CronJobConfig))
-			{
-				return ;
+
+			CronJobConfig cronJobConfig = null;
+			if (!(jobConfig instanceof CronJobConfig) || !jobConfig.isUsed()) {
+				return;
 			}
-			
-			cronJobConfig = (CronJobConfig)jobConfig;
+
+			cronJobConfig = (CronJobConfig) jobConfig;
 			Scheduler sched = gSchedulerFactory.getScheduler();
-			JobDetail jobDetail = newJob(QuartzJob.class).withIdentity(cronJobConfig.getJobName(), cronJobConfig.getJobGroupName())
-					.build();// 任务名，任务组，任务执行类
+			JobDetail jobDetail = newJob(QuartzJob.class)
+					.withIdentity(cronJobConfig.getJobName(), cronJobConfig.getJobGroupName()).build();// 任务名，任务组，任务执行类
 			jobDetail.getJobDataMap().put("1", cronJobConfig);
 			jobDetail.getJobDataMap().put("2", serviceImpls);
 			// 触发器
@@ -136,8 +132,9 @@ public class QuartzJobConfigListener implements JobConfigListener{
 	public void removeQuartzJob(JobConfig jobConfig) {
 		try {
 			JobKey jobKey = map.get(jobConfig.getJobConfigID());
-			if(jobKey==null)return ;
-			
+			if (jobKey == null)
+				return;
+
 			TriggerKey triggerKey = new TriggerKey(jobKey.getName(), jobKey.getGroup());
 			Scheduler sched = gSchedulerFactory.getScheduler();
 			sched.pauseTrigger(triggerKey);// 停止触发器
@@ -223,7 +220,7 @@ public class QuartzJobConfigListener implements JobConfigListener{
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
 	public void onRemove(JobConfig jobCfg) {
 		removeQuartzJob(jobCfg);

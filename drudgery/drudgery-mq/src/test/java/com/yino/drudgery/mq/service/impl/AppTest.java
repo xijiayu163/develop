@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.test.Apptest;
 import com.yino.drudgery.entity.Job;
 import com.yino.drudgery.entity.JobConfig;
 import com.yino.drudgery.enums.JobPriorityEnum;
@@ -12,7 +11,7 @@ import com.yino.drudgery.factory.JobFactory;
 
 public class AppTest {
 
-	private static final Log log = LogFactory.getLog(Apptest.class);
+	private static final Log log = LogFactory.getLog(AppTest.class);
 	
 	public static void main(String[] args) {
 		try {

@@ -43,6 +43,11 @@ public class DependencyJobStatusLinstener implements JobStatusListener{
 		List<JobConfig> list = serviceImpls.getJobConfigService().getDependencyJobConfigs(job.getJobcfg().getJobName());
 		for(JobConfig jobConfig :list)
 		{
+			if(!jobConfig.isUsed())
+			{
+				continue;
+			}
+			
 			Job newJob=JobFactory.createJob(jobConfig);
 			newJob.setInputJobData(job.getOutputJobData());
 			serviceImpls.getMsgService().sendMsg(newJob);

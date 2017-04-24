@@ -1,10 +1,7 @@
 package com.yino.test;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.yino.drudgery.entity.Job;
 import com.yino.drudgery.factory.JobFactory;
-import com.yino.drudgery.worker.StandardJobWorker;
 
 public class Apptest {
 
@@ -24,19 +21,6 @@ public class Apptest {
 		t2.start();
 	}
 
-	public synchronized void pasue() {
-		try {
-			job.wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public synchronized void continue1() {
-		job.notify();
-	}
-
 	public class run1 implements Runnable {
 		private Apptest apptest;
 
@@ -48,6 +32,7 @@ public class Apptest {
 		public void run() {
 			synchronized (apptest) {
 				try {
+					apptest.notify();
 					apptest.wait();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

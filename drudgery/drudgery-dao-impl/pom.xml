@@ -36,11 +36,17 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
+		
 		<dependency>
+			<groupId>com.yino</groupId>
+			<artifactId>drudgery-base</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+<!-- 		<dependency>
 			<groupId>com.yino</groupId>
 			<artifactId>support-base</artifactId>
 			<version>2.11.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	
 	<build>

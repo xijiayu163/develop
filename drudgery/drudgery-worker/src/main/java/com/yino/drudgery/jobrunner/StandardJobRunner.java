@@ -24,9 +24,9 @@ import com.yino.drudgery.rw.IWrite;
  */
 public class StandardJobRunner extends JobRunner {
 
-	private IRead readImpl = null;
-	private IWrite writeImpl = null;
-	private List<IConvert> convertImpl = null;
+	private IRead reader = null;
+	private IWrite writer = null;
+	private List<IConvert> convertes = null;
 
 	/**
 	 * 构造函数
@@ -48,7 +48,7 @@ public class StandardJobRunner extends JobRunner {
 			if (list.size() > 0) {
 				String[] ss = list.get(0).split(";");
 				if (ss.length >= 2) {
-					readImpl = ReaderFactory.createInstance(ss[0], ss[1]);
+					reader = ReaderFactory.createInstance(ss[0], ss[1]);
 				} else {
 					job.setJobRunError(JobRunErrorEnum.createReaderError);
 					job.setErrorMessage(String.format("创建Read接口错误,无法解析配置：{0}", list.get(0)));
@@ -67,7 +67,7 @@ public class StandardJobRunner extends JobRunner {
 			if (list.size() > 0) {
 				String[] ss = list.get(0).split(";");
 				if (ss.length >= 2) {
-					writeImpl = WriterFactory.createInstance(ss[0], ss[1]);
+					writer = WriterFactory.createInstance(ss[0], ss[1]);
 				} else {
 					job.setJobRunError(JobRunErrorEnum.createWriterError);
 					job.setErrorMessage(String.format("创建Write接口错误,无法解析配置：{0}", list.get(0)));
@@ -84,7 +84,8 @@ public class StandardJobRunner extends JobRunner {
 			for (String s : list) {
 				String[] ss = s.split(";");
 				if (ss.length >= 2) {
-					writeImpl = WriterFactory.createInstance(ss[0], ss[1]);
+					IConvert convert = ConverterFactory.createInstance(ss[0], ss[1]);
+					convertes.add(convert);
 				} else {
 					job.setJobRunError(JobRunErrorEnum.createConverterError);
 					job.setErrorMessage(String.format("创建Convert接口错误,无法解析配置：{0}", list.get(0)));
@@ -111,8 +112,8 @@ public class StandardJobRunner extends JobRunner {
 		}
 
 		// 从取数据接口提取数据
-		if (readImpl != null) {
-			value = readImpl.getData();
+		if (reader != null) {
+			value = reader.getData();
 			if (value.getStatus() == ResultEnum.failure) {
 				job.setErrorMessage(value.getErrorMessage());
 				job.setJobRunError(JobRunErrorEnum.getError);
@@ -129,8 +130,8 @@ public class StandardJobRunner extends JobRunner {
 		}
 
 		// 数据转换接口
-		if (convertImpl != null || !convertImpl.isEmpty()) {
-			for (IConvert converter : convertImpl) {
+		if (convertes != null || !convertes.isEmpty()) {
+			for (IConvert converter : convertes) {
 				value = converter.convert(value);
 				if (value.getStatus() == ResultEnum.failure) {
 					job.setErrorMessage(value.getErrorMessage());
@@ -141,8 +142,8 @@ public class StandardJobRunner extends JobRunner {
 		}
 
 		// 数据写入接口
-		if (writeImpl != null) {
-			value = writeImpl.writeData(value);
+		if (writer != null) {
+			value = writer.writeData(value);
 			if (value.getStatus() == ResultEnum.failure) {
 				job.setErrorMessage(value.getErrorMessage());
 				job.setJobRunError(JobRunErrorEnum.setError);

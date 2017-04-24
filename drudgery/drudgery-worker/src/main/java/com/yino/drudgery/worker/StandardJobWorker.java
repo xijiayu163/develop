@@ -63,9 +63,7 @@ public class StandardJobWorker extends JobReceiveListener{
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-worker.xml");
 			context.start();
 			StandardJobWorker jobWorker = (StandardJobWorker)context.getBean("jobWorker");
-			log.error(jobWorker.getMsgService().toString());
 			
-			//System.exit(0);
 		}
 		catch(Exception e)
 		{

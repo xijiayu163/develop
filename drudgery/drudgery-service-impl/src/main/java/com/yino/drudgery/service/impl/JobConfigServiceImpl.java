@@ -6,12 +6,20 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.yino.drudgery.dao.JobConfigDao;
+import com.yino.drudgery.dao.JobParamDao;
+import com.yino.drudgery.entity.CronJobConfig;
+import com.yino.drudgery.entity.DependencyJobConfig;
 import com.yino.drudgery.entity.JobConfig;
+import com.yino.drudgery.entity.JobConfigParam;
+import com.yino.drudgery.enums.JobPriorityEnum;
+import com.yino.drudgery.enums.TriggerTypeEnum;
 import com.yino.drudgery.listener.JobConfigListener;
+import com.yino.drudgery.po.JobBasicInfo;
+import com.yino.drudgery.po.JobParamInfo;
 import com.yino.drudgery.service.JobConfigService;
+import com.yino.drudgery.utils.PoToBean;
 
 /**
  * @Description:作业配置服务实现
@@ -24,62 +32,122 @@ import com.yino.drudgery.service.JobConfigService;
  * @date:2017/04/11
  * @version:V1.0
  */
-@Service
 public class JobConfigServiceImpl implements JobConfigService {
-	
+	private final Log log = LogFactory.getLog(this.getClass());
 	@Autowired
 	private JobConfigDao jobConfigDao;
-	
-	private final Log log = LogFactory.getLog(this.getClass());
-	private List<JobConfig> jobConfigList;
-	
+	@Autowired
+	private JobParamDao jobParamDao;
+
 	private List<JobConfigListener> jobConfigListeners;
 
 	public JobConfigServiceImpl() {
 		jobConfigListeners = new ArrayList<JobConfigListener>();
-		jobConfigList = new ArrayList<JobConfig>();
 	}
 
+	
+	
 	@Override
 	public JobConfig getJobConfig(String jobName) {
-		for (JobConfig jobConfig : jobConfigList) {
-			if (jobConfig.getJobName() == jobName) {
-				return jobConfig;
-			}
+
+		JobBasicInfo jobBasicInfo = jobConfigDao.getJobBasicInfoByName(jobName);
+		if (jobBasicInfo == null) {
+			return null;
 		}
-		return null;
+
+		JobConfig jobConfig = PoToBean.ConvertToBean(jobBasicInfo);
+		List<JobConfigParam> paramList = new ArrayList<JobConfigParam>();
+		List<JobParamInfo> paramInfoList = jobParamDao.getJobParamInfosByJobBasicUid(jobBasicInfo.getJobBasicUid());
+		for (JobParamInfo jobParamInfo : paramInfoList) {
+			JobConfigParam jobConfigParam = PoToBean.ConvertToBean(jobParamInfo);
+			paramList.add(jobConfigParam);
+
+		}
+
+		jobConfig.setJobConfigParams(paramList);
+		return jobConfig;
+
 	}
 
+	
+	//新增与更新
 	@Override
 	public void saveJobConfig(JobConfig jobConfig) {
-		jobConfigList.add(jobConfig);
-		fireJobConfigEvent(jobConfig,1);
+		
+        JobBasicInfo jobBasicInfo=jobConfigDao.getJobBasicInfoById(jobConfig.getJobConfigID());
+        if(jobBasicInfo!=null)
+        {
+        	jobConfigDao.updateJobBasicInfo(jobBasicInfo);
+        	fireJobConfigEvent(jobConfig, 2);
+        }
+        else
+        {
+        	jobConfigDao.addJobBasicInfo(jobBasicInfo);
+        	fireJobConfigEvent(jobConfig, 1);
+        }
 	}
 
 	@Override
 	public void removeJobConfig(JobConfig jobConfig) {
-		JobConfig jobConfig1 = null;
-		for (JobConfig jobConfig2 : jobConfigList) {
-			if (jobConfig.getJobConfigID() == jobConfig2.getJobConfigID()) {
-				jobConfig1 = jobConfig2;
-			}
+		if(jobConfig==null)
+		{
+			return ;
 		}
-
-		jobConfigList.remove(jobConfig1);
-		fireJobConfigEvent(jobConfig,3);
+		
+		jobConfigDao.delJobBasicInfo(jobConfig.getJobConfigID());
+		jobParamDao.delJobParamsByJobBasicUid(jobConfig.getJobConfigID());
+				
+		fireJobConfigEvent(jobConfig, 3);
 	}
 
 	@Override
 	public List<JobConfig> getAllJobConfig() {
 		List<JobConfig> list = new ArrayList<JobConfig>();
-		list.addAll(jobConfigList);
+		List<JobBasicInfo> jobBasicInfoList = jobConfigDao.getAllJobBasicInfos();
+		for(JobBasicInfo jobBasicInfo:jobBasicInfoList)
+		{
+			JobConfig jobConfig = PoToBean.ConvertToBean(jobBasicInfo);
+			List<JobConfigParam> paramList = new ArrayList<JobConfigParam>();
+			List<JobParamInfo> paramInfoList = jobParamDao.getJobParamInfosByJobBasicUid(jobBasicInfo.getJobBasicUid());
+			for (JobParamInfo jobParamInfo : paramInfoList) {
+				JobConfigParam jobConfigParam = PoToBean.ConvertToBean(jobParamInfo);
+				paramList.add(jobConfigParam);
+
+			}
+			jobConfig.setJobConfigParams(paramList);
+			list.add(jobConfig);
+		}
+
+		
 		return list;
 	}
 
 	@Override
 	public List<JobConfig> getDependencyJobConfigs(String dependencyName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<JobConfig> list = new ArrayList<JobConfig>();
+		List<JobBasicInfo> jobBasicInfoList = jobConfigDao.getAllJobBasicInfos();
+		for(JobBasicInfo jobBasicInfo:jobBasicInfoList)
+		{
+			JobConfig jobConfig = PoToBean.ConvertToBean(jobBasicInfo);
+			if(!(jobConfig instanceof DependencyJobConfig)||
+					((DependencyJobConfig)jobConfig).getDependantJobName()!=dependencyName)
+			{
+				continue;
+			}
+			
+			List<JobConfigParam> paramList = new ArrayList<JobConfigParam>();
+			List<JobParamInfo> paramInfoList = jobParamDao.getJobParamInfosByJobBasicUid(jobBasicInfo.getJobBasicUid());
+			for (JobParamInfo jobParamInfo : paramInfoList) {
+				JobConfigParam jobConfigParam = PoToBean.ConvertToBean(jobParamInfo);
+				paramList.add(jobConfigParam);
+
+			}
+			jobConfig.setJobConfigParams(paramList);
+			list.add(jobConfig);
+		}
+
+		
+		return list;
 	}
 
 	@Override

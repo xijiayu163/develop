@@ -51,6 +51,7 @@ public class QuartzJob implements Job {
 		com.yino.drudgery.entity.Job job = JobFactory.createJob(jobConfig);
 		serviceImpls.getMsgService().sendMsg(job);
 		serviceImpls.getJobService().addJob(job);
+		
 	}
 
 }

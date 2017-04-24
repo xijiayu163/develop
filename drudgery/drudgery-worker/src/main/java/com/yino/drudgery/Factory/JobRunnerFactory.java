@@ -30,6 +30,10 @@ public class JobRunnerFactory {
 	public static JobRunner createJobRunner(Job job, MessageService service) throws Exception {
 		JobRunner runner = null;
 
+		String classPath = job.getJobcfg().getClassName();
+		if (classPath==null || classPath.isEmpty()) {
+			throw new Exception("配置错误，无法创建JobRunner实例！");
+		}
 		String[] ss = job.getJobcfg().getClassName().split(";");
 		if (ss.length < 2) {
 			throw new Exception("配置错误，无法创建JobRunner实例！");

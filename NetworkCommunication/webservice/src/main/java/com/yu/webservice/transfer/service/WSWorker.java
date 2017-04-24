@@ -37,9 +37,18 @@ public class WSWorker
     private static Logger logger = Logger.getLogger(WSWorker.class.getName());
     
     public static void main(String [] args) throws SOAPException{
+//    	Map<String,Object> map = new HashMap<String, Object>();
+//    	map.put("arg0", "1");
+//    	JSONArray jsonArray = performRequest("q1111","getDoctor1","http://service.transfer.webservice.yu.com/",map,"http://127.0.0.1:8888/ws/cxf/DoctorService1?WSDL");
+//    	String jsonString = jsonArray.toJSONString();
+//    	System.out.println(jsonString);
+    
+    	String body = "<root><orgCode>01</orgCode><id>0739544</id></root>"; 
+    	String header = "<?xml version=\"1.0\" encoding=\"utf-8\"?><root><serverName>GetTumorPatients </serverName> <format>xml</format><callOperator></callOperator><certificate>yfwY7nygVGeNbb2Xf9heItlCGLzAYdOS </certificate></root>";
     	Map<String,Object> map = new HashMap<String, Object>();
-    	map.put("arg0", "1");
-    	JSONArray jsonArray = performRequest("q1111","getDoctor1","http://service.transfer.webservice.yu.com/",map,"http://127.0.0.1:8888/ws/cxf/DoctorService1?WSDL");
+    	map.put("msgHeader", header);
+    	map.put("msgBody", body);
+    	JSONArray jsonArray = performRequest("xxx","CallInterface","http://www.zysoft.com/",map,"http://61.154.9.208:3682/services/WSInterface?wsdl");
     	String jsonString = jsonArray.toJSONString();
     	System.out.println(jsonString);
     }

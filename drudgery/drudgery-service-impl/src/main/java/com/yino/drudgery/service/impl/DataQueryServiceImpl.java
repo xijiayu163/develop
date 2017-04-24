@@ -39,7 +39,7 @@ public class DataQueryServiceImpl implements DataQueryService {
 
 	public synchronized String Query(String jobName, Map<String, String> map) {
 		JobConfig jobConfig = jobConfigService.getJobConfig(jobName);
-		if (jobConfig == null) {
+		if (jobConfig == null ||!jobConfig.isUsed()) {
 			return String.format("请求错误，没有名为【{0}】的作业配置！", jobName);
 		}
 
@@ -65,7 +65,7 @@ public class DataQueryServiceImpl implements DataQueryService {
 
 	public String AsyncQuery(String jobName, String callbackUrl, Map<String, String> map) {
 		JobConfig jobConfig = jobConfigService.getJobConfig(jobName);
-		if (jobConfig == null) {
+		if (jobConfig == null || !jobConfig.isUsed()) {
 			return String.format("请求错误，没有名为【{0}】的作业配置！", jobName);
 		}
 

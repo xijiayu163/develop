@@ -71,6 +71,7 @@ public class JobServiceImpl implements JobService {
 				listener.onStart(job);
 			} else if (job.getJobRunStatus() == JobRunStatusEnum.finish) {
 				listener.onFinish(job);
+				map.remove(job.getJobId());//将已完成的作业移除
 			}
 		}
 	}
@@ -95,6 +96,8 @@ public class JobServiceImpl implements JobService {
 		if (!map.containsKey(job.getJobId())) {
 			map.put(job.getJobId(), job);
 		}
+		
+		job = map.get(job.getJobId());
 
 		synchronized (job) {
 			try {

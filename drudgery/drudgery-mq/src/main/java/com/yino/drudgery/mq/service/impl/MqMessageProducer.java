@@ -10,7 +10,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import com.alibaba.fastjson.JSONObject;
 import com.yino.drudgery.entity.Job;
-import com.yino.drudgery.enums.JobPriorityEnum;
 
 public class MqMessageProducer {
 
@@ -24,7 +23,12 @@ public class MqMessageProducer {
 	 */
 	public synchronized void sendMessage(final Job job) {
 		activeMqJmsTemplate.setExplicitQosEnabled(true);
-		activeMqJmsTemplate.setPriority(getPriority(job.getPriority()));
+		int priority = 4;
+		if(job.getPriority()!=null)
+		{
+			priority = job.getPriority().getNum();
+		}
+		activeMqJmsTemplate.setPriority(priority);
 		activeMqJmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
 				TextMessage createTextMessage = session.createTextMessage(JSONObject.toJSONString(job));
@@ -36,20 +40,4 @@ public class MqMessageProducer {
 			}
 		});
 	}
-
-	private int getPriority(JobPriorityEnum jobPriority) {
-		int priority = 4;
-		switch (jobPriority) {
-		case Low:
-			priority = 0;
-			break;
-		case Hight:
-			priority = 9;
-		case Normal:
-		default:
-			priority = 4;
-		}
-		return priority;
-	}
-
 }

@@ -31,7 +31,7 @@ public class SyncDataServiceImpl implements SyncDataService {
 	@Override
 	public String syncData(String jobName, String inputData) {
 		JobConfig jobConfig = jobConfigService.getJobConfig(jobName);
-		if (jobConfig == null) {
+		if (jobConfig == null || !jobConfig.isUsed()) {
 			return String.format("请求错误，没有名为【{0}】的作业配置！", jobName);
 		}
 

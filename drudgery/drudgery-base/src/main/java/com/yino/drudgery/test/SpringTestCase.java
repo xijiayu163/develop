@@ -18,6 +18,12 @@ import junit.framework.TestCase;
 //  //@ContextConfiguration(name = "child", locations = "classpath:spring-mvc.xml")
 //})
 //@RunWith(SpringJUnit4ClassRunner.class)
+
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({
+    "classpath:spring-context.xml"
+})
 public abstract class SpringTestCase extends TestCase{
 	static {
 //        try {
