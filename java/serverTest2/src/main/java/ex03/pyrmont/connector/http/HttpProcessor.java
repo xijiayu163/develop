@@ -34,7 +34,7 @@ public class HttpProcessor {
 	 * The string manager for this package.
 	 */
 	protected StringManager sm = StringManager.getManager("ex03.pyrmont.connector.http");
-
+	
 	public void process(Socket socket) {
 		SocketInputStream input = null;
 		OutputStream output = null;
@@ -136,6 +136,7 @@ public class HttpProcessor {
 	private void parseRequest(SocketInputStream input, OutputStream output) throws IOException, ServletException {
 
 		// Parse the incoming request line
+		//将解析的请求行数据填充到requestLine对象
 		input.readRequestLine(requestLine);
 		String method = new String(requestLine.method, 0, requestLine.methodEnd);
 		String uri = null;

@@ -1,0 +1,48 @@
+POST /examples/default.jsp HTTP/1.1
+Accept: text/plain; text/html
+Accept-Language: en-gb
+Connection: Keep-Alive
+Host: localhost
+User-Agent: Mozilla/4.0 (compatible; MSIE 4.01; Windows 98)
+Content-Length: 33
+Content-Type: application/x-www-form-urlencoded
+Accept-Encoding: gzip, deflate
+
+lastName=Franks&firstName=Michael
+
+第一行:方法 统一资源标识符(URI) 协议/版本
+这里 POST 是请求方法，/examples/default.jsp 是 URI，而 HTTP/1.1 是协议/版本部分
+HTTP 1.1 支持 7 种类型的请求：GET, POST,HEAD, OPTIONS, PUT, DELETE 和 TRACE
+URI 完全指明了一个互联网资源。URI 通常是相对服务器的根目录解释的。因此，始终一斜线/开头。
+
+2到9行是请求的头部,包含了关于客户端环境和请求的主体内容的有用信息。 例如它可能包括浏览器设
+置的语言，主体内容的长度等等。每个头部通过一个回车换行符(CRLF)来分隔的。
+对于 HTTP 请求格式来说， 头部和主体内容之间有一个回车换行符(CRLF)是相当重要的。 CRLF
+告诉HTTP服务器主体内容是在什么地方开始的。 在一些互联网编程书籍中， CRLF还被认为是HTTP
+请求的第四部分。
+
+11 行是请求的主体
+
+类似于 HTTP 请求，一个 HTTP 响应也包括三个组成部分：
+  方法—统一资源标识符(URI)—协议/版本
+  响应的头部
+  主体内容
+下面是一个 HTTP 响应的例子：
+HTTP/1.1 200 OK
+Server: Microsoft-IIS/4.0
+Date: Mon, 5 Jan 2004 13:13:33 GMT
+Content-Type: text/html
+Last-Modified: Mon, 5 Jan 2004 13:13:12 GMT
+Content-Length: 112
+
+<html>
+<head>
+<title>HTTP Response Example</title>
+</head>
+<body>
+Welcome to Brainy Software
+</body>
+</html>
+
+
+

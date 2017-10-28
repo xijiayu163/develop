@@ -1,0 +1,22 @@
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[init]-847-localhost-startStop-1 ContextConfig: Initializing
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[init]-851-localhost-startStop-1 解析context.xml...
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[contextConfig]-594-localhost-startStop-1 处理contextConfig,defaultContextUrl:/F:/github/develop/java/serverstudy2/conf/context.xml
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[processContextConfig]-626-localhost-startStop-1 Processing context [] configuration file [file:/F:/github/develop/java/serverstudy2/conf/context.xml]
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[processContextConfig]-660-localhost-startStop-1 Successfully processed context [] configuration file [file:/F:/github/develop/java/serverstudy2/conf/context.xml]
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[init]-853-localhost-startStop-1 解析context.xml完成
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[init]-855-localhost-startStop-1 创建webXmlDigester...
+DEBUG: 2017-10-15 21:10:00 [ContextConfig.java]-[ContextConfig]-[init]-858-localhost-startStop-1 创建webXmlDigester完成
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[configureStart]-885-localhost-startStop-1 ContextConfig: Processing START
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[configureStart]-888-localhost-startStop-1 Context [] will parse web.xml and web-fragment.xml files with validation:false and namespaceAware:false
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[parseWebXml]-1863-localhost-startStop-1 Parsing application web.xml file at file:/F:/github/develop/java/serverstudy2/conf/web.xml
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[getContextWebXmlSource]-1762-localhost-startStop-1 Missing application web.xml, using defaults only org.apache.catalina.core.StandardContext@50fba502
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[parseWebXml]-1863-localhost-startStop-1 Parsing application web.xml file at jar:file:/F:/github/develop/java/serverstudy2/libs/tomcat7-websocket.jar!/META-INF/web-fragment.xml
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[processAnnotationsJar]-1976-localhost-startStop-1 Scanning jar file for class files with annotations [jar:file:/F:/github/develop/java/serverstudy2/libs/tomcat7-websocket.jar!/]
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[processAnnotationsJar]-1976-localhost-startStop-1 Scanning jar file for class files with annotations [jar:file:/F:/github/develop/java/serverstudy2/libs/easymock-3.2.jar!/]
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[processAnnotationsJar]-1976-localhost-startStop-1 Scanning jar file for class files with annotations [jar:file:/C:/Users/xijia/.m2/repository/org/springframework/spring-core/4.0.2.RELEASE/spring-core-4.0.2.RELEASE.jar!/]
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[processAnnotationsJar]-1976-localhost-startStop-1 Scanning jar file for class files with annotations [jar:file:/C:/Users/xijia/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar!/]
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[authenticatorConfig]-512-localhost-startStop-1 Configured an authenticator for method NONE
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[configureStart]-909-localhost-startStop-1 Pipeline Configuration:
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[configureStart]-916-localhost-startStop-1   org.apache.catalina.authenticator.NonLoginAuthenticator/1.0
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[configureStart]-916-localhost-startStop-1   org.apache.catalina.core.StandardContextValve/1.0
+DEBUG: 2017-10-15 21:10:03 [ContextConfig.java]-[ContextConfig]-[configureStart]-919-localhost-startStop-1 ======================

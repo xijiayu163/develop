@@ -63,6 +63,7 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
         committed = false;
         finished = false;
 
+        
     }
 
     /**
@@ -104,7 +105,6 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
     public void init(SocketWrapper<Socket> socketWrapper,
             AbstractEndpoint<Socket> endpoint) throws IOException {
 
-    	log.info("outputStream = socketWrapper.getSocket().getOutputStream();");
         outputStream = socketWrapper.getSocket().getOutputStream();
     }
 

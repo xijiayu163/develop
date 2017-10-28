@@ -4,5 +4,13 @@
 	<groupId>com.yu</groupId>
 	<artifactId>serverTest2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<dependencies>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>1.2</version>
+		</dependency>
+	</dependencies>
 
 </project>

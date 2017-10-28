@@ -59,6 +59,18 @@ import java.util.StringTokenizer;
  * 参考链接:http://blog.csdn.net/kfanning/article/details/6062118/
  * @author 刘长炯
  * @version 1.0 2007-07-24 Sunday
+ * 
+ * HTTP请求的格式如下所示：
+<request-line>
+<headers>
+<blank line>
+[<request-body>]
+例如:
+GET / HTTP/1.1
+Host: www.baidu.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)
+Gecko/20050225 Firefox/1.0.1
+Connection: Keep-Alive
  */
 public class SimpleHttpServer implements Runnable {
 	/**
